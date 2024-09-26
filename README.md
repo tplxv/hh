@@ -85,10 +85,10 @@ class CodeGenerator:
 class Compiler:
     def compile(self, input_stream, output_stream):
         scanner = Scanner(input_stream)
-```
         builder = ProgramNodeBuilder()
         parser = Parser()
         parser.parse(scanner, builder)
         generator = CodeGenerator(output_stream)
         parse_tree = builder.get_root_node()
         parse_tree.traverse(generator)
+```
