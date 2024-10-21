@@ -249,43 +249,32 @@ print(f'Rating: {my_ebook.get_rating()}')
 ```python
 class Book:
     def __init__(self, title, author, year, genre, pages):
-        self.__title = title  # Приватный атрибут
-        self.__author = author  # Приватный атрибут
-        self.__year = year  # Приватный атрибут
-        self.__genre = genre  # Приватный атрибут
-        self.__pages = pages  # Приватный атрибут
-        self.__rating = None  # Приватный атрибут
-
-    # Геттер для названия книги
-    @property
-    def title(self):
-        return self.__title
-
-    # Геттер для автора книги
-    @property
-    def author(self):
-        return self.__author
+        self._title = title  # Приватный атрибут
+        self._author = author  # Приватный атрибут
+        self._year = year  # Приватный атрибут
+        self._genre = genre  # Приватный атрибут
+        self._pages = pages  # Приватный атрибут
+        self._rating = None  # Приватный атрибут
 
     def get_info(self):
-        return f'"{self.__title}" by {self.__author}, published in {self.__year}, Genre: {self.__genre}, Pages: {self.__pages}'
+        return f'"{self._title}" by {self._author}, published in {self._year}, Genre: {self._genre}, Pages: {self._pages}'
 
     def rate_book(self, rating):
         if 0 <= rating <= 5:
-            self.__rating = rating
-            return f'Book rated with {self.__rating}/5 stars.'
+            self._rating = rating
+            return f'Book rated with {self._rating}/5 stars.'
         else:
             return 'Rating must be between 0 and 5.'
 
-    # Геттер для рейтинга книги
-    @property
+    # Функция для рейтинга книги
     def rating(self):
-        return self.__rating if self.__rating is not None else 'No rating yet'
+        return self._rating if self._rating is not None else 'No rating yet'
 
 
 class EBook(Book):
     def __init__(self, title, author, year, genre, pages, file_size):
         super().__init__(title, author, year, genre, pages)
-        self.__file_size = file_size 
+        self.__file_size = file_size
 
     def get_info(self):
         return super().get_info() + f', File size: {self.__file_size} MB'
@@ -294,7 +283,7 @@ my_ebook = EBook("Sapiens: A Brief History of Humankind", "Yuval Noah Harari", 2
 
 print(my_ebook.get_info())
 print(my_ebook.rate_book(5))
-print(f'Rating: {my_ebook.rating}')
+print(f'Rating: {my_ebook._rating}')
 ```
 
 ### Результат
