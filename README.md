@@ -146,8 +146,17 @@ for shape in shapes:
   ## Самостоятельная работа №8. 
 ### 1) Самостоятельно создайте класс и его объект. Они должны отличаться, от тех, что указаны в теоретическом материале (методичке) и лабораторных заданиях. Результатом выполнения задания будет листинг кода и получившийся вывод консоли
 ```python
+class Book:
+    def __init__(self, title, author, year):
+        self.title = title
+        self.author = author
+        self.year = year
 
+    def get_info(self):
+        return f'"{self.title}" by {self.author}, published in {self.year}'
 
+my_book = Book("1984", "George Orwell", 1949)
+print(my_book.get_info())
 ```
 
 ### Результат
@@ -156,7 +165,32 @@ for shape in shapes:
 
 ### 2) Самостоятельно создайте атрибуты и методы для ранее созданного класса. Они должны отличаться, от тех, что указаны в теоретическом материале (методичке) и лабораторных заданиях. Результатом выполнения задания будет листинг кода и получившийся вывод консоли.
 ```python
+class Book:
+    def __init__(self, title, author, year, genre, pages):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.genre = genre
+        self.pages = pages
+        self.rating = None
 
+    def get_info(self):
+        return f'"{self.title}" by {self.author}, published in {self.year}, Genre: {self.genre}, Pages: {self.pages}'
+
+    def rate_book(self, rating):
+        if 0 <= rating <= 5:
+            self.rating = rating
+            return f'Book rated with {self.rating}/5 stars.'
+        else:
+            return 'Rating must be between 0 and 5.'
+
+    def get_rating(self):
+        return self.rating if self.rating is not None else 'No rating yet'
+
+my_book = Book("1984", "George Orwell", 1949, "Dystopian", 328)
+print(my_book.get_info())
+print(my_book.rate_book(5))
+print(f'Rating: {my_book.get_rating()}')
 ```
 
 ### Результат
@@ -166,7 +200,42 @@ for shape in shapes:
 
 ### 3) Самостоятельно реализуйте наследование, продолжая работать с ранее созданным классом. Оно должно отличаться, от того, что указано в теоретическом материале (методичке) и лабораторных заданиях. Результатом выполнения задания будет листинг кода и получившийся вывод консоли.
 ```python
+class Book:
+    def __init__(self, title, author, year, genre, pages):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.genre = genre
+        self.pages = pages
+        self.rating = None
 
+    def get_info(self):
+        return f'"{self.title}" by {self.author}, published in {self.year}, Genre: {self.genre}, Pages: {self.pages}'
+
+    def rate_book(self, rating):
+        if 0 <= rating <= 5:
+            self.rating = rating
+            return f'Book rated with {self.rating}/5 stars.'
+        else:
+            return 'Rating must be between 0 and 5.'
+
+    def get_rating(self):
+        return self.rating if self.rating is not None else 'No rating yet'
+
+
+class EBook(Book):
+    def __init__(self, title, author, year, genre, pages, file_size):
+        super().__init__(title, author, year, genre, pages)
+        self.file_size = file_size
+
+    def get_info(self):
+        return super().get_info() + f', File size: {self.file_size} MB'
+
+my_ebook = EBook("Sapiens: A Brief History of Humankind", "Yuval Noah Harari", 2011, "Non-fiction", 443, 1.2)
+
+print(my_ebook.get_info())
+print(my_ebook.rate_book(5))
+print(f'Rating: {my_ebook.get_rating()}')
 ```
 
 ### Результат
@@ -178,7 +247,54 @@ for shape in shapes:
 ### 4) Самостоятельно реализуйте инкапсуляцию, продолжая работать с ранее созданным классом. Она должна отличаться, от того, что указана в теоретическом материале (методичке) и лабораторных заданиях. Результатом выполнения задания будет листинг кода и получившийся вывод консоли
 
 ```python
+class Book:
+    def __init__(self, title, author, year, genre, pages):
+        self.__title = title  # Приватный атрибут
+        self.__author = author  # Приватный атрибут
+        self.__year = year  # Приватный атрибут
+        self.__genre = genre  # Приватный атрибут
+        self.__pages = pages  # Приватный атрибут
+        self.__rating = None  # Приватный атрибут
 
+    # Геттер для названия книги
+    @property
+    def title(self):
+        return self.__title
+
+    # Геттер для автора книги
+    @property
+    def author(self):
+        return self.__author
+
+    def get_info(self):
+        return f'"{self.__title}" by {self.__author}, published in {self.__year}, Genre: {self.__genre}, Pages: {self.__pages}'
+
+    def rate_book(self, rating):
+        if 0 <= rating <= 5:
+            self.__rating = rating
+            return f'Book rated with {self.__rating}/5 stars.'
+        else:
+            return 'Rating must be between 0 and 5.'
+
+    # Геттер для рейтинга книги
+    @property
+    def rating(self):
+        return self.__rating if self.__rating is not None else 'No rating yet'
+
+
+class EBook(Book):
+    def __init__(self, title, author, year, genre, pages, file_size):
+        super().__init__(title, author, year, genre, pages)
+        self.__file_size = file_size 
+
+    def get_info(self):
+        return super().get_info() + f', File size: {self.__file_size} MB'
+
+my_ebook = EBook("Sapiens: A Brief History of Humankind", "Yuval Noah Harari", 2011, "Non-fiction", 443, 1.2)
+
+print(my_ebook.get_info())
+print(my_ebook.rate_book(5))
+print(f'Rating: {my_ebook.rating}')
 ```
 
 ### Результат
@@ -188,7 +304,29 @@ for shape in shapes:
 
 ### 5) Самостоятельно реализуйте полиморфизм. Он должен отличаться, от того, что указан в теоретическом материале (методичке) и лабораторных заданиях. Результатом выполнения задания будет листинг кода и получившийся вывод консоли.
 ```python
+class Animal:
+    def speak(self):
+        raise NotImplementedError("Subclasses must implement this method")
 
+class Dog(Animal):
+    def speak(self):
+        return "Гав!"
+
+class Cat(Animal):
+    def speak(self):
+        return "Мяу!"
+
+class Cow(Animal):
+    def speak(self):
+        return "Муу!"
+
+def animal_sound(animal):
+    print(animal.speak())
+
+if __name__ == "__main__":
+    animals = [Dog(), Cat(), Cow()]
+    for animal in animals:
+        animal_sound(animal)
 ```
 
 ### Результат
